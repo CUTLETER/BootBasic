@@ -44,6 +44,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	implementation 'com.mysql:mysql-connector-j:8.0.33' // mysql 커넥터 (오라클 커넥터는 따로)
 
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16' // 마이바티스 실행 로그 기능
+
 }
 
 tasks.named('test') {
