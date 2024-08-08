@@ -1,0 +1,9 @@
+# 데이터베이스 생성 구문
+create database spring default charset utf8;
+
+# 계정 생성 구문 - 계정 이름과 비밀번호
+create user spring identified by 'spring';
+
+# 권한 부여
+# grant all privileges on 데이터베이스명.* to 계정명;
+grant all privileges on spring.* to spring;

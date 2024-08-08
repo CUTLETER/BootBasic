@@ -1,5 +1,6 @@
 package com.simple.basic.controller;
 
+import com.simple.basic.command.MemberVO;
 import com.simple.basic.command.ValidVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,6 @@ public class ValidController {
     public String actionForm(@Valid @ModelAttribute("vo") ValidVO vo, BindingResult binding) {
         // @Valid 는 유효성 검사를 하겠다는 뜻
         // 만약 유효성 검사에 통과하지 못하면, 통과하지 못한 멤버변수 내역이 BindingResult에 저장됨
-
         if(binding.hasErrors()) { // 내역이 있으면 true, 없으면 false
 //            System.out.println("유효성 검증 실패!");
 //
@@ -45,8 +45,21 @@ public class ValidController {
 //            }
             return "valid/view"; // 다시 뷰 화면으로
         }
-
         System.out.println(vo.toString());
         return "valid/result";
+    }
+
+    @GetMapping("/quiz01")
+    public String quiz01(Model model) {
+        model.addAttribute("vo", new MemberVO());
+        return "valid/quiz01";
+    }
+
+    @PostMapping("/quizForm")
+    public String quizForm(@Valid @ModelAttribute("vo") MemberVO vo, BindingResult br) {
+        if(br.hasErrors()) {
+            return "valid/quiz01";
+        }
+        return "valid/quiz01_result";
     }
 }

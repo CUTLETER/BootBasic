@@ -24,13 +24,15 @@ public class ValidVO {
     기타 등등
     */
 
+
+    // messages.properties 생성으로 메세지 부분은 의미 없어짐
     @NotBlank // (message = "이름은 필수로 입력해 주세요.")
     private String name;
-    @NotNull(message = "급여는 필수로 입력해 주세요.")
+    @NotNull //(message = "급여는 필수로 입력해 주세요.")
     private Integer salary; // wrapper 타입으로 기재할 것! 값이 비어 있으면 null값으로 자동 바인딩 됨! int는 0 뿐이라 공백 받을 시 오류남!
-    @Pattern(regexp = "[0-9]{3}-[0-9]{4}-[0-9]{4}", message = "연락처는 -(하이픈)을 넣어서 입력해 주세요.")
+    @Pattern(regexp = "[0-9]{3}-[0-9]{4}-[0-9]{4}") //, message = "연락처는 -(하이픈)을 넣어서 입력해 주세요.")
     private String phone;
     @NotBlank
-    @Email(message = "이메일 형식이어야 합니다.") // 공백은 기본으로 통과시킴 -> 막을 거면 NotBlank 같이 쓰기
+    @Email//(message = "이메일 형식이어야 합니다.") // 공백은 기본으로 통과시킴 -> 막을 거면 NotBlank 같이 쓰기
     private String email;
 }
