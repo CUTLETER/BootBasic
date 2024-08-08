@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>include 확인 1</h3>
+<!--fragment로 조각낸 걸 가져오기 :: 뒤엔 fragment id 적기-->
+    <th:block th:replace="~{/include/layout01 :: part1}">
+    </th:block>
+    <th:block th:replace="~{/include/layout01 :: part2}">
+    </th:block>
+
+<!--파일 통째로 가져오기-->
+    <th:block th:replace="~{/include/layout02}">
+    </th:block>
+</body>
+</html>

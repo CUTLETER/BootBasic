@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>반복문</h3>
+    [[${list}]]
+
+    <ul>
+        <!--일반 for문 없음, 향상된 for문만 있음-->
+        <li th:each="vo : ${list}"><!--타임리프는 태그에 직접적으로 걸어야 함-->
+            [[${vo.num}]]
+            [[${vo.name}]]
+            [[${vo.addr}]]
+            [[${vo.age}]]
+        </li>
+    </ul>
+
+    <hr>
+
+    <h3>반복문과 state 객체</h3>
+    <ul>
+        <li th:each="a, state : ${list}">
+        <!--첫번째 변수(a)엔 값을 담아주고
+        두번째 변수(stata)엔 '상태변수' 담아줌-->
+        [[${state}]]<br>
+        [[${state.index}]]<br>
+        [[${state.count}]]<br>
+        [[${state.size}]]
+        </li>
+    </ul>
+
+    <hr>
+
+    <h3>list의 vo의 num이 짝수인 경우만 출력?</h3>
+    <ul>
+        <li th:each="a : ${list}" th:if="${a.num%2==0}">
+            [[${a.num}]]
+            [[${a.name}]]
+        </li>
+    </ul>
+</body>
+</html>

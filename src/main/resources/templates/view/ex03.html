@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>block 구문</h3>
+    <!--타임리프에서 특별한 태그를 쓰지 않고
+        마치 {}처럼 사용하고 싶을 때 쓸 수 있음-->
+    <ul>
+        <th:block th:each="vo : ${list}">
+        <li>[[${vo}]]</li>
+        </th:block>
+    </ul>
+
+    <hr>
+
+    <h3>a태그 사용하기</h3>
+    <ul>
+        <li th:each="vo : ${list}">
+<!--        <a href="ex03_result?num=${vo.num}">[[${vo.name}]]</a>-->
+            <!--위처럼 쓰면 주소에 num=${vo.num} 이렇게 나옴-->
+
+            방법 1
+<!--        @{ex03_result(키=값)}-->
+            <a th:href="@{ex03_result(num=${vo.num}, name=${vo.name})}">[[${vo.name}]]</a>
+            <hr>
+            방법 2 (pathVariable - URL 주소를 가변 매개변수로 쓰는 방법
+<!--        <a href="경로/값/값">[[${vo.name}]]</a>-->
+            <a th:href="@{ex03_result2/{name}/{age}(name=${vo.name}, age=${vo.age})}">[[${vo.name}]]</a>
+        </li>
+    </ul>
+</body>
+</html>

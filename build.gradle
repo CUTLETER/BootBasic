@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.18'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.simple'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(11)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 타임리프 뷰
+	implementation 'org.springframework.boot:spring-boot-starter-web' // 부트 web 모듈
+	compileOnly 'org.projectlombok:lombok' // 롬복
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' // 부트 dev 모듈
+	annotationProcessor 'org.projectlombok:lombok' // 롬복
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // 테스트 모듈
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // 테스트 모듈
+
+	// jsp를 뷰로 사용하려면?
+	// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.83'
+	// https://mvnrepository.com/artifact/javax.servlet/jstl
+	implementation 'javax.servlet:jstl:1.2'
+
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.18'// validation 주입
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

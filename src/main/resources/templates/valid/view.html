@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>스프링 부트 서버 측 유효성 검증</h3>
+    <form action="actionForm" method="post">
+        이름 : <input type="text" name="name" th:value="${vo.name}">
+        <span th:errors="${vo.name}"></span> <!--에러가 있으면 실행됨(ValidVO에서 해당 태그에 걸린 메세지를 사용자가 보는 화면에 출력해줌!)-->
+        <br>
+        급여 : <input type="text" name="salary" th:value="${vo.salary}">
+        <span th:errors="${vo.salary}"></span> <!-- @NotNull(message = "급여는 필수로 입력해 주세요.") 화면에 출력-->
+        <br>
+        연락처 : <input type="text" name="phone" th:value="${vo.phone}">
+        <span th:errors="${vo.phone}"></span>
+        <br>
+        이메일 : <input type="text" name="email" th:value="${vo.email}">
+        <span th:errors="${vo.email}"></span>
+        <br>
+        <input type="submit" value="유효성 검증">
+    </form>
+
+[[${vo}]]
+</body>
+</html>
