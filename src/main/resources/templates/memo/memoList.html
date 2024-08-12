@@ -15,17 +15,16 @@
 				<td>연락처</td>
 				<td>공개여부</td>
 			</tr>
-						
-			<tr >
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>공개여부에 따라 if~unless처리</td>
 
+			<tr th:each="vo : ${list}" >
+				<td>[[${vo.mno}]]</td>
+				<td>[[${vo.secret == 'y' ? '비공개입니다' : vo.memo }]]</td>
+				<td>[[${vo.phone}]]</td>
+				<td>[[${vo.secret == 'y' ? '비공개' : '공개' }]]</td>
 			</tr>
 			
 	</table>
-	
-	<a href="#">메모쓰기</a>
+
+	<a href="memoWrite">메모쓰기(컨트롤러 경로)</a>
 </body>
 </html>
