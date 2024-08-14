@@ -1,14 +1,15 @@
 package com.simple.basic.controller;
 
+import com.simple.basic.command.MemoVO;
 import com.simple.basic.command.TestVO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.Valid;
+import java.util.*;
 
 /*
 @Controller와 @RestController의 근본적인 차이점은 @Controller의 역할은 Model 객체를 만들어 데이터를 담고 View를 찾는 것이지만
@@ -31,7 +32,7 @@ public class RestBasicController {
     }
 
 
-    // Get 방식의 요청 받기 - 일반 컨트롤러에서 받는 형식과 똑같은 방법으로 가능함
+    // Get 방식의 요청 받기 - 일반 컨트롤러에서 받는 형식과 똑같은 방법으로 가능함 - 경로 속에 ? & 데이터 나열
     // 크롬 캐스트 확장 프로그램 '부메랑' 켜서 할 것
     // 예시 1) http://localhost:8181/getData?num=1&name=홍길동
     //    @GetMapping("/getData")
@@ -45,7 +46,7 @@ public class RestBasicController {
         return "getData";
     }
 
-    // PathVariable 방식의 요청 받기
+    // PathVariable 방식의 요청 받기 - 경로 속에 {}/{} 데이터 나열
     // 예시 2) http://localhost:8181/getData2/1/홍길동
     @GetMapping("/getData2/{num}/{name}")
     public String getData2(@PathVariable("num") int num, @PathVariable("name") String name) {
@@ -113,8 +114,12 @@ public class RestBasicController {
 
     // 응답 문서 명확하게 작성하기!
     // ResponseEntity<데이터 타입>
+    @CrossOrigin({"http://127.0.0.1:5500","http://localhost:5500"}) // CORS 에러 방지 - 다른 서버에서의 요청(VScode) 허용
+    // @CrossOrigin("*") - 모든 서버에 대한 요청을 승인하기 때문에 요청 경로 잘 모르겠으면 써도 됨! 다만 굉장히 위험할 수 있음
     @PostMapping("/getEntity")
-    public ResponseEntity<TestVO> getEntity() {
+    public ResponseEntity<TestVO> getEntity(@RequestBody TestVO vv) {
+        System.out.println("받은 데이터 vv : "+vv.toString()); // vv는 hello.html의 post 방식 예제
+
         TestVO vo = new TestVO(1,"홍길동",20,"서울시");
         // 1
         //ResponseEntity entity = new ResponseEntity(vo, HttpStatus.BAD_REQUEST); // HttpStatus.xxxxx -> status(상태값) 직접 명시 가능함!
@@ -124,11 +129,45 @@ public class RestBasicController {
         HttpHeaders header = new HttpHeaders(); // 헤더
         header.add("Authorization", "Bearer JSON WEB TOKEN"); // 키, 값
         header.add("Content-type", "application/json;charset=UTF-8"); // produces와 같은 표현
-        header.add("Access-Control-Allow-Origin", "http://example.com");
+//      header.add("Access-Control-Allow-Origin", "http://example.com");
 
         ResponseEntity entity = new ResponseEntity(vo, header, HttpStatus.OK); // 데이터, 헤더, 상태값
         
         return entity;
+    }
+
+
+    // 요청 주소 : /api/v1/getData
+    // 메소드 : get 방식
+    // 요청 파라미터 : sno(숫자), name(문자)
+    // 응답 파라미터 : MemoVO 타입
+    // 헤더에 담을 내용 HttpStatus.OK
+    // fetch API 사용헤서 클라이언트에 요청, 응답
+    // 이 내용들을 담아서 REST API 만들기
+
+    @GetMapping("/api/v1/getData")
+    public ResponseEntity<MemoVO> getData3(@RequestParam("sno") int sno, @RequestParam("name") String name) {
+        System.out.println(sno+", "+name);
+        return new ResponseEntity<MemoVO>(new MemoVO(1L, "홍길동", "01013147564", null, "n"), HttpStatus.OK);
+    }
+
+    // 요청 주소 : /api/v1/getInfo
+    // 메소드 : post 방식
+    // 요청 파라미터 : MemoVO 타입
+    // 응답 파라미터 : List<MemoVO> 타입
+    // 헤더에 담을 내용 : HttpStatus.OK
+    // fetch API 사용해서 클라이언트에 요청, 응답
+
+    @PostMapping("/api/v1/getInfo")
+    public ResponseEntity<List<MemoVO>> getInfo(@RequestBody @Valid MemoVO vo, BindingResult binding) { // 유효성 검증 추가
+        if(binding.hasErrors()) {
+            System.out.println("유효성 검증에 실패했습니다.");
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        List<MemoVO> list = new ArrayList<>();
+        list.add(vo);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

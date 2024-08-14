@@ -6,5 +6,137 @@
 </head>
 <body>
     thymeleaf 로 만들어진 view
+
+    <!--get 방식과 post 방식의 예제-->
+    <button type="button" id="getBtn">get 방식</button>
+    <button type="button" id="postBtn">post 방식</button>
+<!--
+    <script>
+        var getBtn = document.getElementById("getBtn");
+        getBtn.addEventListener("click", function() {
+            // 내 서버로 보내는 거라 전체 경로 다 적지 않아도 됨!
+            // 아래는 절대 경로
+            fetch("/getData2/1/홍길동").then(function (response) {
+                return response.text();
+            }).then(function (data) {
+                console.log(data);
+            })
+        })
+
+        var postBtn = document.getElementById("postBtn");
+        postBtn.addEventListener("click", function () {
+            fetch("/getEntity", {
+                method : "post", // 키 : 값
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({num : 1, name : "홍길동"})
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log(data);
+            })
+        })
+    </script>
+
+-->
+
+    <!--제이쿼리-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $("#getBtn").click(function() {
+            $.ajax({ // {} 안에 키 : 값 나열
+                type : "get", // 요청 방식
+                url : "/getData2/1/호로록", // 요청 경로
+                success : function(data) {
+                    console.log(data)
+                }, // 실행 결과를 반환 받을 콜백 함수
+                error : function(error, status) {
+                    console.log(error)
+                } // 혹시 실패했을 때 동작시킬 콜백 함수
+            })
+        })
+
+        $("#postBtn").click(function() {
+            $.ajax({
+                type : "post", // 요청 방식
+                url : "/getEntity", // 요청 경로
+                data : JSON.stringify({num : 1, name : "깔깔마녀"}), // 보낼 데이터
+                contentType : "application/json", // 보낼 데이터에 대한 타입
+                dataType : "json", // 서버가 반환하는 데이터 타입 *생략 가능*
+                success : function(data) {
+                    console.log(data);
+                },
+                error : function(error) {
+                    console.log(error);
+                }
+            })
+        })
+    </script>
+
+
+    <button type="button" id="ex01">ex01</button>
+    <button type="button" id="ex02">ex02</button>
+
+    <!--
+    <script>
+        var ex01 = document.getElementById("ex01");
+        ex01.addEventListener("click", function() {
+
+            fetch("/api/v1/getData?sno=1&name=이순신")
+                .then(function(response) {
+                    return response.json() //응답 json
+                })
+                .then(function(data) {
+                    console.log(data)
+                })
+        })
+
+        var ex02 = document.getElementById("ex02");
+        ex02.addEventListener("click", function () {
+            fetch("/api/v1/getInfo", {
+                method : "post",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({memo : "호롤롤롤ㄹ로", phone : "011-1111-1111"})
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log(data);
+            })
+        })
+    </script>
+    -->
+
+    <!--제이쿼리-->
+    <script>
+        $("#ex01").click(function() {
+            $.ajax({
+                type : "get",
+                url : "/api/v1/getData?sno=1&name=깔깔마녀",
+                success : function(data) {
+                    console.log(data)
+                },
+                error : function(error) {
+                    console.log(error)
+                }
+            })
+        })
+        $("#ex02").click(function() {
+            $.ajax({
+                type : "post",
+                url : "/api/v1/getInfo",
+                data : JSON.stringify({memo: "호롤롤롤로롤", phone: "011-1111-1111"}),
+                contentType : "application/json",
+                success : function(data) {
+                    console.log(data);
+                },
+                error : function(error) {
+                    console.log(error);
+                }
+            })
+        })
+    </script>
 </body>
 </html>
