@@ -114,7 +114,7 @@ public class RestBasicController {
 
     // 응답 문서 명확하게 작성하기!
     // ResponseEntity<데이터 타입>
-    @CrossOrigin({"http://127.0.0.1:5500","http://localhost:5500"}) // CORS 에러 방지 - 다른 서버에서의 요청(VScode) 허용
+    @CrossOrigin({"http://127.0.0.1:5500","http://localhost:5500", "http://localhost:3000"}) // CORS 에러 방지 - 다른 서버에서의 요청(VScode) 허용
     // @CrossOrigin("*") - 모든 서버에 대한 요청을 승인하기 때문에 요청 경로 잘 모르겠으면 써도 됨! 다만 굉장히 위험할 수 있음
     @PostMapping("/getEntity")
     public ResponseEntity<TestVO> getEntity(@RequestBody TestVO vv) {

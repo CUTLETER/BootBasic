@@ -46,6 +46,11 @@ dependencies {
 
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16' // 마이바티스 실행 로그 기능
 
+	// 웹소켓
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+
 }
 
 tasks.named('test') {
